@@ -10,7 +10,7 @@ class JapaneseDateTranslator < Sinatra::Base
 
   post '/date' do
     @date = params[:date]
-    @date = DateTranslator.new(@date).translate_day + ' ' + DateTranslator.new(@date).translate_month
+    @date = DateTranslator.new(@date).translate_day + ' ' + DateTranslator.new(@date).translate_month + ' ' + DateTranslator.new(@date).translate_year
     erb :translated_date
   end
 end
