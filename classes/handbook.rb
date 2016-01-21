@@ -7,13 +7,15 @@ class HandBook
                  7 => '七', 8 => '八',
                  9 => '九', 10 => '十',
                  20 => '二十', 30 => '三十',
+                 40 => '四十', 50 => '五十',
                  1000 => '千', 100 => '百'
                }
     end
 
     def jap_words
       hash ||= { day: '日', month: '月',
-                 year: '年'
+                 year: '年', hour: '時',
+                 minute: '分'
                }
     end
   end
