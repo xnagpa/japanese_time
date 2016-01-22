@@ -17,7 +17,7 @@ class DateTranslator
       japanese_date << HandBook.jap_digits[(european_date.day % 10)]
     end
     japanese_date << HandBook.jap_words[:day]
-    japanese_date.join(' ')
+    japanese_date.join('')
   end
 
   def translate_month
@@ -31,7 +31,7 @@ class DateTranslator
       japanese_date << HandBook.jap_digits[(european_date.month % 10)]
     end
     japanese_date << HandBook.jap_words[:month]
-    japanese_date.join(' ')
+    japanese_date.join('')
   end
 
 # this method  is awful shit. Refactor later.
@@ -60,6 +60,6 @@ class DateTranslator
       japanese_date << HandBook.jap_digits[(year % 10)] if year % 10 != 1
     end
 
-    japanese_date.reverse.join(' ')
+    japanese_date.reverse.join('')
   end
 end

@@ -4,8 +4,7 @@ class TimeTranslator
   end
 
   def convert_time
-    "#{add_mid} #{translate_digits(@time.hour)} #{HandBook.jap_words[:hour]}\
-     #{translate_digits(@time.min)} #{HandBook.jap_words[:minute]}"
+    "#{add_mid}#{translate_digits(@time.hour)}#{HandBook.jap_words[:hour]}#{translate_digits(@time.min)}#{HandBook.jap_words[:minute] unless @time.min == 0}"
   end
 
   def translate_digits(time)
