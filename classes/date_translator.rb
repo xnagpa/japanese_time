@@ -8,7 +8,7 @@ class DateTranslator
 
   def translate_day
     return unless @date
-    european_date = DateTime.strptime(@date, '%Y-%m-%d')
+    european_date = DateTime.strptime(@date, '%m/%d/%Y')
     japanese_date = []
     if european_date.day / 10 == 0
       japanese_date << HandBook.jap_digits[european_date.day]
@@ -22,7 +22,7 @@ class DateTranslator
 
   def translate_month
     return unless @date
-    european_date = DateTime.strptime(@date, '%Y-%m-%d')
+    european_date = DateTime.strptime(@date, '%m/%d/%Y')
     japanese_date = []
     if european_date.month / 10 == 0
       japanese_date << HandBook.jap_digits[european_date.month]
@@ -37,7 +37,7 @@ class DateTranslator
 # this method  is awful shit. Refactor later.
   def translate_year
     return unless @date
-    european_date = DateTime.strptime(@date, '%Y-%m-%d')
+    european_date = DateTime.strptime(@date, '%m/%d/%Y')
     japanese_date = []
     year = european_date.year
     japanese_date << HandBook.jap_words[:year]
