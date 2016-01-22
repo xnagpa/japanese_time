@@ -1,24 +1,50 @@
-<h1>Input the date</h1>
-<form action="/date" method="post">
-  <input type="date" id="japanese_date" name="date">
-  <input type="time" id="japanese_time" name="time" value="11:45 AM">
-  <input type="submit">
+<h1>Input the date and time</h1>
+<form action="/date" method="post" id="viz_form" class="form-inline text-center">
+  <fieldset class="form-group">
+    <input type="date" id="japanese_date" name="date">
+    <input type="time" id="japanese_time" name="time" value="11:45 AM">
+    <input type="submit">
+  </fieldset>
 </form>
+<h2>Get japanese date and time</h2>
+<div id="viz" class="text-center"></div>
 
 <script type="text/javascript">
-    var datefield=document.createElement("input")
-    datefield.setAttribute("type", "date")
-    if (datefield.type!="date"){ //if browser doesn't support input type="date", load files for jQuery UI Date Picker
-        document.write('<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />\n')
-        document.write('<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"><\/script>\n')
-        document.write('<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"><\/script>\n') 
-    }
+  var datefield=document.createElement("input")
+  datefield.setAttribute("type", "date")
+  if (datefield.type!="date"){ //if browser doesn't support input type="date", load files for jQuery UI Date Picker
+      document.write('<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />\n')
+      document.write('<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"><\/script>\n')
+      document.write('<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"><\/script>\n') 
+  }
 </script>
  
 <script>
-if (datefield.type!="date"){ //if browser doesn't support input type="date", initialize date picker widget:
-    jQuery(function($){ //on document.ready
-        $('#japanese_date').datepicker();
-    })
+if (datefield.type!="date"){ //if browser doesn't support input type="date", initialize date picker 
+  $(function($){ //on document.ready
+      $('#japanese_date').datepicker();
+  })
 }
+</script>
+<script type="text/javascript">
+  $(function (){
+    $('#viz_form').submit(function(ev){
+      //this happens if form is submitted
+      //prevent the default behavior of a form (it should do nothing in our case)
+      ev.preventDefault();
+      //send an ajax request to our action
+      $.ajax({
+        url: "/date",
+        //serialize the form and use it as data for our ajax request
+        data: $(this).serialize(),
+        type: "POST",
+        //the type of data we are expecting back from server, could be json too
+        dataType: "html",
+        success: function(data) {
+          //if our ajax request is successful, replace the content of our viz div with the response data
+          $('#viz').html(data);
+        }
+      });
+    });
+  });
 </script>
