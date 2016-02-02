@@ -2,6 +2,7 @@ require 'sinatra'
 require 'pry'
 require 'time'
 require 'kakasi'
+require 'natto'
 require_relative 'classes/handbook.rb'
 require_relative 'classes/date_translator.rb'
 require_relative 'classes/time_translator.rb'
@@ -12,11 +13,7 @@ class JapaneseDateTranslator < Sinatra::Base
   end
 
   post '/date' do
-    if request.xhr?
-      %q{<h1 class="blue">Hello! <a href="/">back</a></h1>}
-    else
-      "<h1>Not an Ajax request!</h1>"
-    end
+    nm = Natto::MeCab.new('-F%f[7]')
     @date = params[:date]
 
     @time = params[:time]
@@ -25,16 +22,16 @@ class JapaneseDateTranslator < Sinatra::Base
     @day_romaji = Kakasi.kakasi('-Ha -Ka -Ja -Ea -ka', @day)
 
     @month = DateTranslator.new(@date).translate_month
-    @month_hiragana = Kakasi.kakasi('-JH', @month)
-    @month_romaji = Kakasi.kakasi('-Ha -Ka -Ja -Ea -ka', @month)
+    @month_hiragana = Kakasi.kakasi('-KH', nm.parse(@month)).chop.chomp('EOS')
+    @month_romaji = Kakasi.kakasi('-Ha -Ka -Ja -Ea -ka', @month_hiragana)
 
     @year = DateTranslator.new(@date).translate_year
-    @year_hiragana = Kakasi.kakasi('-JH', @year)
-    @year_romaji = Kakasi.kakasi('-Ha -Ka -Ja -Ea -ka', @year)
+    @year_hiragana = Kakasi.kakasi('-KH', nm.parse(@year)).chop.chomp('EOS')
+    @year_romaji = Kakasi.kakasi('-Ha -Ka -Ja -Ea -ka', @year_hiragana)
 
     @time = TimeTranslator.new(@time).convert_time
-    @time_hiragana = Kakasi.kakasi('-JH', @time)
-    @time_romaji = Kakasi.kakasi('-Ha -Ka -Ja -Ea -ka', @time)
+    @time_hiragana = Kakasi.kakasi('-KH', nm.parse(@time)).chop.chomp('EOS')
+    @time_romaji = Kakasi.kakasi('-Ha -Ka -Ja -Ea -ka', @time_hiragana)
     erb :translated_date, layout: false
   end
 end
