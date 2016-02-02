@@ -1,5 +1,5 @@
 class TimeTranslator
-	def initialize(time)
+  def initialize(time)
     @time = Time.parse(time)
   end
 
@@ -19,7 +19,7 @@ class TimeTranslator
   end
 
   def add_mid
-    @time.hour < 12? '午前' : '午後'
-  end  
-
+    binding.pry
+    @time.hour < 12 ? '午前' : '午後'
+  end
 end
