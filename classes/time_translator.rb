@@ -19,7 +19,6 @@ class TimeTranslator
   end
 
   def add_mid
-    binding.pry
     @time.hour < 12 ? '午前' : '午後'
   end
 end
