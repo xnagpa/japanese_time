@@ -6,7 +6,11 @@ require 'nkf'
 require_relative 'classes/handbook.rb'
 require_relative 'classes/date_translator.rb'
 require_relative 'classes/time_translator.rb'
-require_relative 'classes/generic_hiragana_translator.rb'
+require_relative 'classes/day_to_hiragana_translator.rb'
+require_relative 'classes/year_to_hiragana_translator.rb'
+require_relative 'classes/month_to_hiragana_translator.rb'
+require_relative 'classes/thousand_to_hiragana_translator.rb'
+require_relative 'classes/hundred_to_hiragana_translator.rb'
 # Japanese date translator
 class JapaneseDateTranslator < Sinatra::Base
   get '/' do
@@ -16,23 +20,31 @@ class JapaneseDateTranslator < Sinatra::Base
   post '/date' do
     # nm = Natto::MeCab.new('-F%f[7]')
     # ne = Natto::MeCab.new
-    @date = params[:date]
+    # translate('二日')
+    # translate('十二日')
+    # translate('十二年')
+    # translate('十二月')
+    # translate('一月')
+    # translate('一月')
+    binding.pry
+    translate('十二一百')
+    # @date = params[:date]
 
-    @time = params[:time]
+    # @time = params[:time]
 
-    @day = DateTranslator.new(@date).translate_day
-    @day_hiragana = kanji_hiragana(@day)
+    # @day = DateTranslator.new(@date).translate_day
+    # @day_hiragana = kanji_hiragana(@day)
 
-    @month = DateTranslator.new(@date).translate_month
-    @month_hiragana = kanji_hiragana(@month)
-    @year_hiragana = []
+    # @month = DateTranslator.new(@date).translate_month
+    # @month_hiragana = kanji_hiragana(@month)
+    # @year_hiragana = []
 
-    @year = DateTranslator.new(@date).translate_year
-    @year.scan(/([^千]*千)([^百]*百)([^年]*年)/)[0].each do |word|
-      @year_hiragana << kanji_hiragana(word)
-    end
+    # @year = DateTranslator.new(@date).translate_year
+    # @year.scan(/([^千]*千)([^百]*百)([^年]*年)/)[0].each do |word|
+    #   @year_hiragana << kanji_hiragana(word)
+    # end
 
-    @year_hiragana = @year_hiragana.join('')
+    # @year_hiragana = @year_hiragana.join('')
 
     #@time = TimeTranslator.new(@time).convert_time
     #binding.pry
@@ -50,7 +62,8 @@ class JapaneseDateTranslator < Sinatra::Base
     # @time_hiragana = NKF.nkf('-h1 -w', nm.parse(@time)).chop.chomp('EOS')
   end
 
-  def kanji_hiragana(kanji_string)
-    GenericHiraganaTranslator.new.kanji_hiragana(kanji_string)
+  def translate(kanji_string)
+    klass = HandBook.translator[kanji_string[-1].to_sym]
+    Object.const_get(klass).new.kanji_hiragana(kanji_string)
   end
 end

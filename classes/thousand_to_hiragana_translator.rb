@@ -1,9 +1,8 @@
-class YearToHiraganaTranslator
+class ThousandToHiraganaTranslator
   def kanji_hiragana(kanji_string)
     result = []
     kanji_string.split('').each do |kanji|
-      result << HandBook.regular_readings[kanji.to_sym]
+      result << HandBook.regular_readings[kanji]
     end
-    result.join('')
   end
 end
