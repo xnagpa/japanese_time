@@ -1,11 +1,11 @@
 class HundredToHiraganaTranslator
   def kanji_hiragana(kanji_string)
     result = []
-    kanji_string.chars.each_slice(2).map(&:join).each do |couple|
-      if !check_whole_word(couple).empty?
-        result << check_whole_word(couple)
+    kanji_string.chars.reverse.each_slice(2).map(&:join).reverse.each do |couple|
+      if !check_whole_word(couple.reverse).empty?
+        result << check_whole_word(couple.reverse)
       else
-        result << process_manually(couple)
+        result << process_manually(couple.reverse)
       end
     end
     result.join('')

@@ -11,6 +11,8 @@ require_relative 'classes/year_to_hiragana_translator.rb'
 require_relative 'classes/month_to_hiragana_translator.rb'
 require_relative 'classes/thousand_to_hiragana_translator.rb'
 require_relative 'classes/hundred_to_hiragana_translator.rb'
+require_relative 'classes/digits_to_hiragana_translator.rb'
+require_relative 'classes/parser.rb'
 # Japanese date translator
 class JapaneseDateTranslator < Sinatra::Base
   get '/' do
@@ -26,8 +28,9 @@ class JapaneseDateTranslator < Sinatra::Base
     # translate('十二月')
     # translate('一月')
     # translate('一月')
+    kanji_arr = Parser.new.parse('一二sdf四千ついたち二十')
+    result_arr = kanji_arr.map{|str| translate(str)}
     binding.pry
-    translate('十二一百')
     # @date = params[:date]
 
     # @time = params[:time]
@@ -64,6 +67,8 @@ class JapaneseDateTranslator < Sinatra::Base
 
   def translate(kanji_string)
     klass = HandBook.translator[kanji_string[-1].to_sym]
-    Object.const_get(klass).new.kanji_hiragana(kanji_string)
+    return DigitsToHiraganaTranslator.new.kanji_hiragana(kanji_string) unless klass
+    translation = Object.const_get(klass).new.kanji_hiragana(kanji_string)
+
   end
 end
