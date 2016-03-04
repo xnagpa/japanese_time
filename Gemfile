@@ -5,8 +5,6 @@ gem 'natto'
 gem 'rack'
 gem 'activesupport'
 
+gem 'rspec'
+gem 'rack-test'
 
-group :test do
-  gem 'rspec'
-  gem 'rack-test'
-end
