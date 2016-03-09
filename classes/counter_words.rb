@@ -31,4 +31,12 @@ class CounterWords
              .new(type).kanji_hiragana(kanji_string) if type == '日'
     return UniversalTranslator.new(type).kanji_hiragana(kanji_string)
   end
+
+  # def self.translate_standalone_kanji(kanji_string)
+  #   kanji_string.chars.each do |char|
+  #     if HandBook.regular_readings[char]
+  #       kanji_string.gsub
+  #     end
+  #   end
+  # end
 end
