@@ -13,6 +13,7 @@ notifications:
 # Кэшируем гемы, чтобы не устанавливать каждый раз все заново
 cache: bundler
 
+script: bundle exec rspec spec
 
 gemfile:
   - Gemfile
