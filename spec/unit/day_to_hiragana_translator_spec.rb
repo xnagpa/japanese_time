@@ -1,7 +1,7 @@
 require File.expand_path '../../spec_helper.rb', __FILE__
 require 'pry'
 
-describe DayToHiraganaTranslator do
+describe CustomTranslators::DayToHiraganaTranslator do
   HandBook.special_readings[:日].keys.each do |key|
     it 'translates special days correctly' do
       expect(described_class.new('日').kanji_hiragana(key.to_s)).

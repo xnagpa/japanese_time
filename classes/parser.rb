@@ -11,21 +11,18 @@ class Parser
     while i < str.length
       result_str = ''
 
-      if JAP_DIGITS.include? get_unicode(str[i])
+      if jap_digit?(str[i])
         j = i
-        while (j < str.length) && (JAP_DIGITS.include? get_unicode(str[j]))
+        while (j < str.length) && jap_digit?(str[j])
 
           result_str << str[j]
           j += 1
         end
 
-        if (j < str.length) && (JAP_SUFFIXES.include? get_unicode(str[j]))
+        if (j < str.length) && suffix_known?(str[j])
           result_str << str[j]
-          i = j
-        else
-          i = j
         end
-
+        i = j
       end
       result_arr << result_str unless result_str.empty?
       i += 1
@@ -37,5 +34,13 @@ class Parser
 
   def get_unicode(str)
     str.unpack('U')[0]
+  end
+
+  def suffix_known?(suffix)
+    JAP_SUFFIXES.include? get_unicode(suffix)
+  end
+
+  def jap_digit?(str)
+    JAP_DIGITS.include? get_unicode(str)
   end
 end
