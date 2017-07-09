@@ -3,9 +3,10 @@ My not so alive project — When you handle japanese kanjis that represent time,
 you may notice, that their reading changes depending on context. I used `natto` tool in order to convert kanjis to hiragana. 
 And there I first met incorrect behaviour of `natto`.
 Example: 
-二十四日  -> `Nijū shi-nichi` which is not correct. 
 
-二十四日  -> `Nijūyokka` which is correct. 
+* 二十四日  -> `Nijū shi-nichi` which is not correct. 
+
+* 二十四日  -> `Nijūyokka` which is correct. 
 
 So my goal was to handle all incorrect interpretation cases.
 There for I've built time converter, day of the week converter, hundreds and thousands converter and some more converters. 
